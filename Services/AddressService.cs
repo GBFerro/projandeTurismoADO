@@ -1,9 +1,13 @@
-﻿using Models;
+﻿using System.Data.SqlClient;
+using Models;
 
 namespace Services
 {
     public class AddressService
     {
+        readonly string strConn = @"Server=(localdb)\MSSQLLocalDB;Integrated Security=true;AttachDbFileName=C:\Users\adm\source\repos\projAndreTurismo\Database\AndreTurismo.mdf";
+        readonly SqlConnection conn;
+
         public int InsertAddress()
         {
             return 0;

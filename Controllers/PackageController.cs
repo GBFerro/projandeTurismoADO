@@ -1,4 +1,6 @@
-﻿namespace Controllers
+﻿using Models;
+
+namespace Controllers
 {
     public class PackageController
     {

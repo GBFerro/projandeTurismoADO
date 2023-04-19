@@ -8,11 +8,14 @@ namespace Models
 {
     public class Ticket
     {
+        public readonly static string INSERT = "insert into Ticket (Departure, Arrival, RegisterDate, Value) " +
+            "values (@Departure, @Arrival, @RegisterDate, @Value); Select cast(scope_Identity() as int)";
+
         public int Id { get; set; }
-        public Address From { get; set; }
-        public Address To { get; set; }
-        public Client Client { get; set; }
+        public Address Arrival { get; set; }
+        public Address Departure { get; set; }
+        //public Client Client { get; set; }
         public decimal Value { get; set; }
-        public DateTime DateTrip { get; set; }
+        public DateTime RegisterDate { get; set; }
     }
 }

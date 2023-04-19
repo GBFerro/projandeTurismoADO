@@ -17,5 +17,10 @@ namespace Models
         //public Client Client { get; set; }
         public decimal Value { get; set; }
         public DateTime RegisterDate { get; set; }
+
+        public override string ToString()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
     }
 }

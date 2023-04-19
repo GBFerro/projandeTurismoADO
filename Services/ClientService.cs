@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Models;
@@ -31,7 +32,7 @@ namespace Services
                 commandInsert.Parameters.Add(new SqlParameter("@RegisterDate", client.RegisterDate));
                 commandInsert.Parameters.Add(new SqlParameter("@IdAddress", client.Address.Id));
 
-                id = (int) commandInsert.ExecuteScalar();
+                id = (int)commandInsert.ExecuteScalar();
                 client.Address.Id = id;
             }
             catch (Exception)
@@ -58,7 +59,45 @@ namespace Services
 
         public List<Client> FindAll()
         {
-            return new List<Client>();
+            List<Client> clients = new List<Client>();
+
+            SqlCommand commandSelect = new SqlCommand(Client.GETALL, conn);
+
+            SqlDataReader reader = commandSelect.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Client client = new Client();
+
+                client.Id = (int)reader["Id"];
+                client.Address = new Address()
+                {
+                    Id = (int)reader["Id"],
+                    Street = (string)reader["Street"],
+                    Number = (int)reader["Number"],
+                    District = (string)reader["District"],
+                    ZipCode = (string)reader["ZipCode"],
+                    Complement = (string)reader["Complement"],
+                    City = new City()
+                    {
+                        Id = (int)reader["Id"],
+                        Name = (string)reader["Name"],
+                        RegisterDate = (DateTime)reader["RegisterDate"]
+                    },
+                    RegisterDate = (DateTime)reader["RegisterDate"]
+                };
+                client.Name = (string)reader["Name"];
+                client.Phone = (string)reader["Phone"];
+                client.RegisterDate = (DateTime)reader["RegisterDate"];
+
+
+                clients.Add(client);
+            }
+
+            return clients;
         }
     }
+
 }
+
+

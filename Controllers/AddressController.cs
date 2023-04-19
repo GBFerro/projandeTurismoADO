@@ -11,10 +11,10 @@ namespace Controllers
     public class AddressController
     {
         private AddressService _addressService;
-        private CityService _cityService;
+        //private CityService _cityService;
         public AddressController() {
             _addressService = new AddressService();
-            _cityService = new CityService();
+            //_cityService = new CityService();
         }  
 
         public bool InsertAddress(Address address)
@@ -49,7 +49,7 @@ namespace Controllers
 
         public List<Address> FindAll()
         {
-            return new List<Address>();
+            return _addressService.FindAll();
         }
     }
 }

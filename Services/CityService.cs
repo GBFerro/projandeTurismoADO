@@ -13,9 +13,36 @@ namespace Services
         readonly string strConn = @"Server=(localdb)\MSSQLLocalDB;Integrated Security=true;AttachDbFileName=C:\Users\adm\source\repos\projAndreTurismo\Database\AndreTurismo.mdf";
         readonly SqlConnection conn;
 
-        public int InsertCity()
+        public CityService()
         {
-            return 0;
+            conn = new SqlConnection(strConn);
+            conn.Open();
+        }
+
+        public City InsertCity(City city)
+        {
+            int id = 0;
+
+            try
+            {
+                SqlCommand commandInsert = new SqlCommand(City.INSERT, conn);
+
+                commandInsert.Parameters.Add(new SqlParameter("@Name", city.Name));
+                commandInsert.Parameters.Add(new SqlParameter("@RegisterDate", city.RegisterDate));
+                
+                id = (int)commandInsert.ExecuteScalar();
+                city.Id = id;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return city;
         }
 
         public int UpdateCity()

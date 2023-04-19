@@ -4,14 +4,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Models;
+using Services;
 
 namespace Controllers
 {
     public class AddressController
     {
-        public int InsertAddress()
+        private AddressService _addressService;
+        private CityService _cityService;
+        public AddressController() {
+            _addressService = new AddressService();
+            _cityService = new CityService();
+        }  
+
+        public bool InsertAddress(Address address)
         {
-            return 0;
+            bool status = false;
+            try
+            {
+                new CityController().InsertCity(address.City);
+                //address.City = _cityService.InsertCity(address.City);
+
+                _addressService.InsertAddress(address);
+
+                status = true;
+            }
+            catch (Exception)
+            {
+                status = false;
+                throw;
+            }
+            return status;
         }
 
         public int UpdateAddress()

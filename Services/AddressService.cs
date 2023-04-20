@@ -67,19 +67,19 @@ namespace Services
             {
                 Address address = new Address();
 
-                address.Id = (int)reader["Id"];
-                address.Street = (string)reader["Street"];
-                address.Number = (int)reader["Number"];
-                address.District = (string)reader["District"];
-                address.ZipCode = (string)reader["ZipCode"];
-                address.Complement = (string)reader["Complement"];
+                address.Id = (int)reader["AddressId"];
+                address.Street = (string)reader["AddressStreet"];
+                address.Number = (int)reader["AddressNumber"];
+                address.District = (string)reader["AddressDistrict"];
+                address.ZipCode = (string)reader["AddressZip"];
+                address.Complement = (string)reader["AddressComplement"];
                 address.City = new City() 
                 { 
-                    Id = (int)reader["Id"],
-                    Name = (string)reader["Name"],
-                    RegisterDate = (DateTime)reader["RegisterDate"]
+                    Id = (int)reader["CityId"],
+                    Name = (string)reader["CityName"],
+                    RegisterDate = (DateTime)reader["CityRegister"]
                 };
-                address.RegisterDate = (DateTime)reader["RegisterDate"];
+                address.RegisterDate = (DateTime)reader["AddressRegister"];
 
                 addresses.Add(address);
             }

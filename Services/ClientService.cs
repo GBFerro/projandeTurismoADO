@@ -33,7 +33,7 @@ namespace Services
                 commandInsert.Parameters.Add(new SqlParameter("@IdAddress", client.Address.Id));
 
                 id = (int)commandInsert.ExecuteScalar();
-                client.Address.Id = id;
+                client.Id = id;
             }
             catch (Exception)
             {
@@ -69,26 +69,26 @@ namespace Services
             {
                 Client client = new Client();
 
-                client.Id = (int)reader["Id"];
+                client.Id = (int)reader["IdClient"];
                 client.Address = new Address()
                 {
-                    Id = (int)reader["Id"],
-                    Street = (string)reader["Street"],
-                    Number = (int)reader["Number"],
-                    District = (string)reader["District"],
-                    ZipCode = (string)reader["ZipCode"],
-                    Complement = (string)reader["Complement"],
+                    Id = (int)reader["IdAddress"],
+                    Street = (string)reader["StreetAddress"],
+                    Number = (int)reader["NumberAddress"],
+                    District = (string)reader["DistrictAddress"],
+                    ZipCode = (string)reader["ZipAddress"],
+                    Complement = (string)reader["ComplementAddress"],
                     City = new City()
                     {
-                        Id = (int)reader["Id"],
-                        Name = (string)reader["Name"],
-                        RegisterDate = (DateTime)reader["RegisterDate"]
+                        Id = (int)reader["IdCity"],
+                        Name = (string)reader["NameCity"],
+                        RegisterDate = (DateTime)reader["RegisterCity"]
                     },
-                    RegisterDate = (DateTime)reader["RegisterDate"]
+                    RegisterDate = (DateTime)reader["RegisterAddress"]
                 };
-                client.Name = (string)reader["Name"];
-                client.Phone = (string)reader["Phone"];
-                client.RegisterDate = (DateTime)reader["RegisterDate"];
+                client.Name = (string)reader["NameClient"];
+                client.Phone = (string)reader["PhoneClient"];
+                client.RegisterDate = (DateTime)reader["RegisterClient"];
 
 
                 clients.Add(client);

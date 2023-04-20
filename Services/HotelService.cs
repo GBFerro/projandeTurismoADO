@@ -30,7 +30,7 @@ namespace Services
                 commandInsert.Parameters.Add(new SqlParameter("@Value", hotel.Value));
                 commandInsert.Parameters.Add(new SqlParameter("@IdAddress", hotel.Address.Id));
 
-                int id = (int) commandInsert.ExecuteScalar();
+                int id = (int)commandInsert.ExecuteScalar();
                 hotel.Id = id;
             }
             catch (Exception)
@@ -57,7 +57,40 @@ namespace Services
 
         public List<Hotel> FindAll()
         {
-            return new List<Hotel>();
+            List<Hotel> hotels = new List<Hotel>();
+
+            SqlCommand commandSelect = new SqlCommand(Hotel.GETALL, conn);
+
+            SqlDataReader reader = commandSelect.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Hotel hotel = new Hotel();
+
+                hotel.Id = (int)reader["IdHotel"];
+                hotel.Name = (string)reader["NameHotel"];
+                hotel.Value = (decimal)reader["ValueHotel"];
+                hotel.Address = new Address()
+                {
+                    Id = (int)reader["IdAddress"],
+                    Street = (string)reader["StreetAddress"],
+                    Number = (int)reader["NumberAddress"],
+                    District = (string)reader["DistrictAddress"],
+                    ZipCode = (string)reader["ZipAddress"],
+                    Complement = (string)reader["ComplementAddress"],
+                    City = new City()
+                    {
+                        Id = (int)reader["IdCity"],
+                        Name = (string)reader["NameCity"],
+                        RegisterDate = (DateTime)reader["RegisterCity"]
+                    },
+                    RegisterDate = (DateTime)reader["RegisterAddress"]
+                };
+                hotel.RegisterDate = (DateTime)reader["RegisterHotel"];
+
+                hotels.Add(hotel);
+            }
+            return hotels;
         }
     }
 }

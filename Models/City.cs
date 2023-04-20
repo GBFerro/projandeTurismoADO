@@ -11,7 +11,7 @@ namespace Models
         public readonly static string INSERT = "insert into City (Name, RegisterDate) " +
             "values (@Name, @RegisterDate); Select cast(scope_Identity() as int)";
         
-        public readonly static string GETALL = "select Id, Name, RegisterDate from City c";
+        public readonly static string GETALL = "select Id , Name, RegisterDate from City";
         
         public int Id { get; set; }
         public string Name { get; set; }
@@ -19,7 +19,7 @@ namespace Models
 
         public override string? ToString()
         {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+            return $"\n\t\t\tId: {this.Id}\n\t\t\tCity Name: {this.Name}\n\t\t\tRegister Date: {this.RegisterDate}";
         }
     }
 }

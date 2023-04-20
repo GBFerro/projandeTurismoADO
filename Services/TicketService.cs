@@ -58,7 +58,55 @@ namespace Services
 
         public List<Ticket> FindAll()
         {
-            return new List<Ticket>();
+            List<Ticket> tickets = new List<Ticket>();
+
+            SqlCommand commandSelect = new SqlCommand(Ticket.GETALL, conn);
+
+            SqlDataReader reader = commandSelect.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Ticket ticket = new Ticket();
+
+                ticket.Id = (int)reader["TicketId"];
+                ticket.Departure = new Address()
+                {
+                    Id = (int)reader["IdAddressDeparture"],
+                    Street = (string)reader["StreetAddressDeparture"],
+                    Number = (int)reader["NumberAddressDeparture"],
+                    District = (string)reader["DistrictAddressDeparture"],
+                    ZipCode = (string)reader["ZipAddressDeparture"],
+                    Complement = (string)reader["ComplementAddressDeparture"],
+                    City = new City()
+                    {
+                        Id = (int)reader["IdCityDeparture"],
+                        Name = (string)reader["NameCityDeparture"],
+                        RegisterDate = (DateTime)reader["RegisterCityDeparture"]
+                    },
+                    RegisterDate = (DateTime)reader["RegisterAddressDeparture"]
+                };
+                ticket.Arrival = new Address()
+                {
+                    Id = (int)reader["IdAddressArrival"],
+                    Street = (string)reader["StreetAddressArrival"],
+                    Number = (int)reader["NumberAddressArrival"],
+                    District = (string)reader["DistrictAddressArrival"],
+                    ZipCode = (string)reader["ZipAddressArrival"],
+                    Complement = (string)reader["ComplementAddressArrival"],
+                    City = new City()
+                    {
+                        Id = (int)reader["IdCityArrival"],
+                        Name = (string)reader["NameCityArrival"],
+                        RegisterDate = (DateTime)reader["RegisterCityArrival"]
+                    },
+                    RegisterDate = (DateTime)reader["RegisterAddressArrival"]
+                };
+                ticket.Value = (decimal)reader["ValueTicket"];
+                ticket.RegisterDate = (DateTime)reader["RegisterTicket"];
+
+                tickets.Add(ticket);
+            }
+            return tickets;
         }
     }
 }

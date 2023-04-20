@@ -57,7 +57,34 @@ namespace Services
 
         public List<Address> FindAll()
         {
-            return new List<Address>();
+            List<Address> addresses = new List<Address>();
+
+            SqlCommand commandSelect = new SqlCommand(Address.GETALL, conn);
+
+            SqlDataReader reader = commandSelect.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Address address = new Address();
+
+                address.Id = (int)reader["AddressId"];
+                address.Street = (string)reader["AddressStreet"];
+                address.Number = (int)reader["AddressNumber"];
+                address.District = (string)reader["AddressDistrict"];
+                address.ZipCode = (string)reader["AddressZip"];
+                address.Complement = (string)reader["AddressComplement"];
+                address.City = new City() 
+                { 
+                    Id = (int)reader["CityId"],
+                    Name = (string)reader["CityName"],
+                    RegisterDate = (DateTime)reader["CityRegister"]
+                };
+                address.RegisterDate = (DateTime)reader["AddressRegister"];
+
+                addresses.Add(address);
+            }
+
+            return addresses;
         }
     }
 }

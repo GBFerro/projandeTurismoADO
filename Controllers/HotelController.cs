@@ -55,7 +55,7 @@ namespace Controllers
 
         public List<Hotel> FindAll()
         {
-            return new List<Hotel>();
+            return _hotelService.FindAll() ;
         }
     }
 }

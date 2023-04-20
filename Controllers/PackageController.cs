@@ -5,21 +5,21 @@ namespace Controllers
 {
     public class PackageController
     {
-        private TicketService _ticketService;
-        private AddressService _addressService;
-        private CityService _cityService;
-        private ClientService _clientService;
-        private HotelService _hotelService;
+        //private TicketService _ticketService;
+        //private AddressService _addressService;
+        //private CityService _cityService;
+        //private ClientService _clientService;
+        //private HotelService _hotelService;
         private PackageService _packageService;
 
         public PackageController()
         {
-            _cityService = new CityService();
-            _ticketService = new TicketService();
-            _addressService = new AddressService();
-            _hotelService = new HotelService();
+            //_cityService = new CityService();
+            //_ticketService = new TicketService();
+            //_addressService = new AddressService();
+            //_hotelService = new HotelService();
+            //_clientService = new ClientService();
             _packageService = new PackageService();
-            _clientService = new ClientService();
         }
         public bool InsertPackage(Package package)
         {
@@ -69,7 +69,7 @@ namespace Controllers
 
         public List<Package> FindAll()
         {
-            return new List<Package>();
+            return _packageService.FindAll();
         }
     }
 }

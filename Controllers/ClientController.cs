@@ -11,14 +11,14 @@ namespace Controllers
     public class ClientController
     {
         private ClientService _clientService;
-        private AddressService _addressService;
-        private CityService _cityService;
+        //private AddressService _addressService;
+        //private CityService _cityService;
 
         public ClientController()
         {
             _clientService = new ClientService();
-            _addressService = new AddressService();
-            _cityService = new CityService();
+            //_addressService = new AddressService();
+            //_cityService = new CityService();
         }
         public bool InsertClient(Client client)
         {
@@ -53,7 +53,7 @@ namespace Controllers
 
         public List<Client> FindAll()
         {
-            return new List<Client>();
+            return _clientService.FindAll();
         }
     }
 }

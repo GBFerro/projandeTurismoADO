@@ -46,7 +46,7 @@ namespace Controllers
 
         public List<City> FindAll()
         {
-            return new List<City>();
+            return _cityService.FindAll();
         }
     }
 }

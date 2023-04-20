@@ -57,7 +57,23 @@ namespace Services
 
         public List<City> FindAll()
         {
-            return new List<City>();
+            List<City> cities = new List<City>();
+
+            SqlCommand commandSelect = new SqlCommand(City.GETALL, conn);
+            SqlDataReader reader = commandSelect.ExecuteReader();
+
+            while (reader.Read())
+            {
+                City city = new City();
+
+                city.Id = (int)reader["Id"];
+                city.Name = (string)reader["Name"];
+                city.RegisterDate = (DateTime)reader["RegisterDate"];
+
+                cities.Add(city);
+            }
+
+            return cities;
         }
     }
 }

@@ -59,7 +59,7 @@ namespace Controllers
 
         public List<Ticket> FindAll()
         {
-            return new List<Ticket>();
+            return _ticketService.FindAll();
         }
     }
 }

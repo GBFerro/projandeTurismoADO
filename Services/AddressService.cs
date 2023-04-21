@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using System.Collections.Generic;
+using System.Data.SqlClient;
 using Models;
 
 namespace Services
@@ -14,12 +15,12 @@ namespace Services
             conn.Open();
         }
 
-        public Address InsertAddress(Address address)
+        public Address InsertAddress(Address address, string INSERT)
         {
             int id = 0;
             try
             {
-                SqlCommand commandInsert = new SqlCommand(Address.INSERT, conn);
+                SqlCommand commandInsert = new SqlCommand(INSERT, conn);
 
                 commandInsert.Parameters.Add(new SqlParameter("@Street", address.Street));
                 commandInsert.Parameters.Add(new SqlParameter("@Number", address.Number));
@@ -55,11 +56,11 @@ namespace Services
             return 0;
         }
 
-        public List<Address> FindAll()
+        public List<Address> FindAll(string GETALL)
         {
             List<Address> addresses = new List<Address>();
 
-            SqlCommand commandSelect = new SqlCommand(Address.GETALL, conn);
+            SqlCommand commandSelect = new SqlCommand(GETALL, conn);
 
             SqlDataReader reader = commandSelect.ExecuteReader();
 

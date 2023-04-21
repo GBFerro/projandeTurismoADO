@@ -19,11 +19,11 @@ namespace Services
             conn.Open();
         }
 
-        public Ticket InsertTicket(Ticket ticket)
+        public Ticket InsertTicket(Ticket ticket, string INSERT)
         {
             try
             {
-                SqlCommand commandInsert = new SqlCommand(Ticket.INSERT, conn);
+                SqlCommand commandInsert = new SqlCommand(INSERT, conn);
 
                 commandInsert.Parameters.Add(new SqlParameter("@Departure", ticket.Departure.Id));
                 commandInsert.Parameters.Add(new SqlParameter("@Arrival", ticket.Arrival.Id));
@@ -56,11 +56,11 @@ namespace Services
             return 0;
         }
 
-        public List<Ticket> FindAll()
+        public List<Ticket> FindAll(string GETALL)
         {
             List<Ticket> tickets = new List<Ticket>();
 
-            SqlCommand commandSelect = new SqlCommand(Ticket.GETALL, conn);
+            SqlCommand commandSelect = new SqlCommand(GETALL, conn);
 
             SqlDataReader reader = commandSelect.ExecuteReader();
 

@@ -20,11 +20,11 @@ namespace Services
             conn.Open();
         }
 
-        public Package InsertPackage(Package package)
+        public Package InsertPackage(Package package, string INSERT)
         {
             try
             {
-                SqlCommand commandInsert = new SqlCommand(Package.INSERT, conn);
+                SqlCommand commandInsert = new SqlCommand(INSERT, conn);
 
                 commandInsert.Parameters.Add(new SqlParameter("@IdHotel", package.Hotel.Id));
                 commandInsert.Parameters.Add(new SqlParameter("@IdTicket", package.Ticket.Id));
@@ -57,11 +57,11 @@ namespace Services
             return 0;
         }
 
-        public List<Package> FindAll()
+        public List<Package> FindAll(string GETALL)
         {
             List<Package> packages = new List<Package>();
 
-            SqlCommand commandSelect = new SqlCommand(Package.GETALL, conn);
+            SqlCommand commandSelect = new SqlCommand(GETALL, conn);
 
             SqlDataReader reader = commandSelect.ExecuteReader();
 

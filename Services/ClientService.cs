@@ -20,12 +20,12 @@ namespace Services
             conn.Open();
         }
 
-        public Client InsertClient(Client client)
+        public Client InsertClient(Client client, string INSERT)
         {
             int id = 0;
             try
             {
-                SqlCommand commandInsert = new SqlCommand(Client.INSERT, conn);
+                SqlCommand commandInsert = new SqlCommand(INSERT, conn);
 
                 commandInsert.Parameters.Add(new SqlParameter("@Name", client.Name));
                 commandInsert.Parameters.Add(new SqlParameter("@Phone", client.Phone));
@@ -57,11 +57,11 @@ namespace Services
             return 0;
         }
 
-        public List<Client> FindAll()
+        public List<Client> FindAll(string GETALL)
         {
             List<Client> clients = new List<Client>();
 
-            SqlCommand commandSelect = new SqlCommand(Client.GETALL, conn);
+            SqlCommand commandSelect = new SqlCommand(GETALL, conn);
 
             SqlDataReader reader = commandSelect.ExecuteReader();
 

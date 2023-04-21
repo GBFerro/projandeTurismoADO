@@ -10,6 +10,17 @@ namespace Controllers
 {
     public class ClientController
     {
+        public readonly static string INSERT = "insert into Client (Name, Phone, RegisterDate, IdAddress) " +
+            "values (@Name, @Phone, @RegisterDate, @IdAddress); Select cast(scope_Identity() as int)";
+
+        public readonly static string GETALL = "select client.[Id] as IdClient, client.[Name] as NameClient, client.[Phone] as PhoneClient, " +
+            "address.[Id] as IdAddress, address.[Street] as StreetAddress, address.[Number] as NumberAddress, address.[District] as DistrictAddress, " +
+            "address.[ZipCode] as ZipAddress, address.[Complement] as ComplementAddress, city.[Id] as IdCity, city.[Name] as NameCity, " +
+            "city.[RegisterDate] as RegisterCity, address.[RegisterDate] as RegisterAddress, " +
+            "client.[RegisterDate] as RegisterClient " +
+            "from[Client] client join[Address] address on client.[IdAddress] = address.[Id]" +
+            "join[City] city on city.[Id] = address.[IdCity]";
+
         private ClientService _clientService;
         //private AddressService _addressService;
         //private CityService _cityService;
@@ -29,7 +40,7 @@ namespace Controllers
                 //client.Address = _addressService.InsertAddress(client.Address);
                 new AddressController().InsertAddress(client.Address);
 
-                _clientService.InsertClient(client);
+                _clientService.InsertClient(client, INSERT);
 
                 status = true;
             }
@@ -53,7 +64,7 @@ namespace Controllers
 
         public List<Client> FindAll()
         {
-            return _clientService.FindAll();
+            return _clientService.FindAll(GETALL);
         }
     }
 }

@@ -19,11 +19,11 @@ namespace Services
             conn.Open();
         }
 
-        public Hotel InsertHotel(Hotel hotel)
+        public Hotel InsertHotel(Hotel hotel, string INSERT)
         {
             try
             {
-                SqlCommand commandInsert = new SqlCommand(Hotel.INSERT, conn);
+                SqlCommand commandInsert = new SqlCommand(INSERT, conn);
 
                 commandInsert.Parameters.Add(new SqlParameter("@Name", hotel.Name));
                 commandInsert.Parameters.Add(new SqlParameter("@RegisterDate", hotel.RegisterDate));
@@ -55,11 +55,11 @@ namespace Services
             return 0;
         }
 
-        public List<Hotel> FindAll()
+        public List<Hotel> FindAll(string GETALL)
         {
             List<Hotel> hotels = new List<Hotel>();
 
-            SqlCommand commandSelect = new SqlCommand(Hotel.GETALL, conn);
+            SqlCommand commandSelect = new SqlCommand(GETALL, conn);
 
             SqlDataReader reader = commandSelect.ExecuteReader();
 

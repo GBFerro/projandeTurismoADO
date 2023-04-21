@@ -19,13 +19,13 @@ namespace Services
             conn.Open();
         }
 
-        public City InsertCity(City city)
+        public City InsertCity(City city, string INSERT)
         {
             int id = 0;
 
             try
             {
-                SqlCommand commandInsert = new SqlCommand(City.INSERT, conn);
+                SqlCommand commandInsert = new SqlCommand(INSERT, conn);
 
                 commandInsert.Parameters.Add(new SqlParameter("@Name", city.Name));
                 commandInsert.Parameters.Add(new SqlParameter("@RegisterDate", city.RegisterDate));
@@ -55,11 +55,11 @@ namespace Services
             return 0;
         }
 
-        public List<City> FindAll()
+        public List<City> FindAll(string GETALL)
         {
             List<City> cities = new List<City>();
 
-            SqlCommand commandSelect = new SqlCommand(City.GETALL, conn);
+            SqlCommand commandSelect = new SqlCommand(GETALL, conn);
             SqlDataReader reader = commandSelect.ExecuteReader();
 
             while (reader.Read())

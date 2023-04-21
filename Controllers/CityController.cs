@@ -10,6 +10,11 @@ namespace Controllers
 {
     public class CityController
     {
+        public readonly static string INSERT = "insert into City (Name, RegisterDate) " +
+            "values (@Name, @RegisterDate); Select cast(scope_Identity() as int)";
+
+        public readonly static string GETALL = "select Id , Name, RegisterDate from City";
+
         private CityService _cityService;
 
         public CityController()
@@ -22,7 +27,7 @@ namespace Controllers
             bool status = false;
             try
             {
-                _cityService.InsertCity(city);
+                _cityService.InsertCity(city, INSERT);
                 status = true;
             }
             catch (Exception)
@@ -46,7 +51,7 @@ namespace Controllers
 
         public List<City> FindAll()
         {
-            return _cityService.FindAll();
+            return _cityService.FindAll(GETALL);
         }
     }
 }

@@ -46,14 +46,53 @@ namespace Services
         }
 
 
-        public int UpdateAddress()
+        public bool UpdateAddress(Address address, string UPDATE)
         {
-            return 0;
+            bool status = false;
+
+            try
+            {
+                SqlCommand commandUpdate = new SqlCommand(UPDATE, conn);
+
+                commandUpdate.Parameters.Add(new SqlParameter("@Id", address.Id));
+                commandUpdate.Parameters.Add(new SqlParameter("@Street", address.Street));
+                commandUpdate.Parameters.Add(new SqlParameter("@Number", address.Number));
+                commandUpdate.Parameters.Add(new SqlParameter("@District", address.District));
+                commandUpdate.Parameters.Add(new SqlParameter("@ZipCode", address.ZipCode));
+                commandUpdate.Parameters.Add(new SqlParameter("@Complement", address.Complement));
+
+                commandUpdate.ExecuteNonQuery();
+
+                status = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return status;
         }
 
-        public int DeleteAddress()
+        public bool DeleteAddress(int id, string DELETE)
         {
-            return 0;
+            bool status = false;
+
+            try
+            {
+                SqlCommand commandDelete = new SqlCommand(DELETE, conn);
+
+                commandDelete.Parameters.Add(new SqlParameter("@Id", id));
+
+                commandDelete.ExecuteNonQuery();
+
+                status = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return status;
         }
 
         public List<Address> FindAll(string GETALL)

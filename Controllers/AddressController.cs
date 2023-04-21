@@ -20,6 +20,11 @@ namespace Controllers
             "c.RegisterDate as CityRegister, a.RegisterDate as AddressRegister " +
             "from Address a join City c on a.IdCity = c.Id";
 
+        public readonly static string DELETE = "delete from Address where Id = @Id";
+
+        public readonly static string UPDATE = "update Address set Street = @Street, Number = @Number, District = @District, " +
+            "ZipCode = @ZipCode, Complement = @Complement where Id = @Id";
+
         private AddressService _addressService;
         //private CityService _cityService;
         public AddressController() {
@@ -27,12 +32,12 @@ namespace Controllers
             //_cityService = new CityService();
         }  
 
-        public bool InsertAddress(Address address)
+        public bool Insert(Address address)
         {
             bool status = false;
             try
             {
-                new CityController().InsertCity(address.City);
+                new CityController().Insert(address.City);
                 //address.City = _cityService.InsertCity(address.City);
 
                 _addressService.InsertAddress(address, INSERT);
@@ -47,14 +52,15 @@ namespace Controllers
             return status;
         }
 
-        public int UpdateAddress()
+        public bool Update(Address address)
         {
-            return 0;
+            new CityController().Update(address.City);
+            return _addressService.UpdateAddress(address, UPDATE);
         }
 
-        public int DeleteAddress()
+        public bool Delete(int id)
         {
-            return 0;
+            return _addressService.DeleteAddress(id, DELETE);
         }
 
         public List<Address> FindAll()

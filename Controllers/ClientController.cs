@@ -21,6 +21,10 @@ namespace Controllers
             "from[Client] client join[Address] address on client.[IdAddress] = address.[Id]" +
             "join[City] city on city.[Id] = address.[IdCity]";
 
+        private readonly static string DELETE = "delete from Client where Id = @Id";
+
+        private readonly static string UPDATE = "update Client set Name = @Name, Phone = @Phone where Id = @Id";
+
         private ClientService _clientService;
         //private AddressService _addressService;
         //private CityService _cityService;
@@ -31,14 +35,14 @@ namespace Controllers
             //_addressService = new AddressService();
             //_cityService = new CityService();
         }
-        public bool InsertClient(Client client)
+        public bool Insert(Client client)
         {
             bool status = false;
             try
             {
                 //client.Address.City = _cityService.InsertCity(client.Address.City);
                 //client.Address = _addressService.InsertAddress(client.Address);
-                new AddressController().InsertAddress(client.Address);
+                new AddressController().Insert(client.Address);
 
                 _clientService.InsertClient(client, INSERT);
 
@@ -52,14 +56,16 @@ namespace Controllers
             return status;
         }
 
-        public int UpdateClient()
+        public bool Update(Client client)
         {
-            return 0;
+            new CityController().Update(client.Address.City);
+            new AddressController().Update(client.Address);
+            return _clientService.UpdateClient(client, UPDATE);
         }
 
-        public int DeleteClient()
+        public bool Delete(int id)
         {
-            return 0;
+            return _clientService.DeleteClient(id, DELETE);
         }
 
         public List<Client> FindAll()

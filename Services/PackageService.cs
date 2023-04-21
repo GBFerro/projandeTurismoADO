@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic;
 using Models;
 
 namespace Services
@@ -47,14 +48,49 @@ namespace Services
             return package;
         }
 
-        public int UpdatePackage()
+        public bool UpdatePackage(Package package, string UPDATE)
         {
-            return 0;
+            bool status = false;
+
+            try
+            {
+                SqlCommand commandUpdate = new SqlCommand(UPDATE, conn);
+
+                commandUpdate.Parameters.Add(new SqlParameter("@Id", package.Id));
+                commandUpdate.Parameters.Add(new SqlParameter("@Value", package.Value));
+
+                commandUpdate.ExecuteNonQuery();
+
+                status = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return status;
         }
 
-        public int DeletePackage()
+        public bool DeletePackage(int id, string DELETE)
         {
-            return 0;
+            bool status = false;
+
+            try
+            {
+                SqlCommand commandDelete = new SqlCommand(DELETE, conn);
+
+                commandDelete.Parameters.Add(new SqlParameter("@Id", id));
+
+                commandDelete.ExecuteNonQuery();
+
+                status = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return status;
         }
 
         public List<Package> FindAll(string GETALL)

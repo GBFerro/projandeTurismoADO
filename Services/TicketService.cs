@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic;
 using Models;
 
 namespace Services
@@ -46,14 +47,49 @@ namespace Services
             return ticket;
         }
 
-        public int UpdateTicket()
+        public bool UpdateTicket(Ticket ticket, string UPDATE)
         {
-            return 0;
+            bool status = false;
+
+            try
+            {
+                SqlCommand commandUpdate = new SqlCommand(UPDATE, conn);
+
+                commandUpdate.Parameters.Add(new SqlParameter("@Id", ticket.Id));
+                commandUpdate.Parameters.Add(new SqlParameter("@Value", ticket.Value));
+
+                commandUpdate.ExecuteNonQuery();
+
+                status = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return status;
         }
 
-        public int DeleteTicket()
+        public bool DeleteTicket(int id, string DELETE)
         {
-            return 0;
+            bool status = false;
+
+            try
+            {
+                SqlCommand commandDelete = new SqlCommand(DELETE, conn);
+
+                commandDelete.Parameters.Add(new SqlParameter("@Id", id));
+
+                commandDelete.ExecuteNonQuery();
+
+                status = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return status;
         }
 
         public List<Ticket> FindAll(string GETALL)

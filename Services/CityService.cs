@@ -29,7 +29,7 @@ namespace Services
 
                 commandInsert.Parameters.Add(new SqlParameter("@Name", city.Name));
                 commandInsert.Parameters.Add(new SqlParameter("@RegisterDate", city.RegisterDate));
-                
+
                 id = (int)commandInsert.ExecuteScalar();
                 city.Id = id;
             }
@@ -45,14 +45,49 @@ namespace Services
             return city;
         }
 
-        public int UpdateCity()
+        public bool UpdateCity(City city, string UPDATE)
         {
-            return 0;
+            bool status = false;
+
+            try
+            {
+                SqlCommand commandUpdate = new SqlCommand(UPDATE, conn);
+
+                commandUpdate.Parameters.Add(new SqlParameter("@Id", city.Id));
+                commandUpdate.Parameters.Add(new SqlParameter("@Name", city.Name));
+
+                commandUpdate.ExecuteNonQuery();
+
+                status = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return status;
         }
 
-        public int DeleteCity()
+        public bool DeleteCity(int id, string INSERT)
         {
-            return 0;
+            bool status = false;
+            try
+            {
+                SqlCommand commandDelete = new SqlCommand(INSERT, conn);
+
+                commandDelete.Parameters.Add(new SqlParameter("@Id", id));
+
+                commandDelete.ExecuteNonQuery();
+
+                status = true;
+            }
+            catch (Exception)
+            {
+                status = false;
+                throw;
+            }
+
+            return status;
         }
 
         public List<City> FindAll(string GETALL)

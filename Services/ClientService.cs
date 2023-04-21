@@ -67,6 +67,10 @@ namespace Services
             {
                 throw;
             }
+            finally
+            {
+                conn.Close();
+            }
 
             return status;
         }
@@ -88,6 +92,10 @@ namespace Services
             catch (Exception)
             {
                 throw;
+            }
+            finally
+            {
+                conn.Close();
             }
 
             return status;

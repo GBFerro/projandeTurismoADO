@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic;
 using Models;
 
 namespace Services
@@ -45,9 +46,28 @@ namespace Services
             return hotel;
         }
 
-        public int UpdateHotel()
+        public bool UpdateHotel(Hotel hotel, string UPDATE)
         {
-            return 0;
+            bool status = false;
+
+            try
+            {
+                SqlCommand commandUpdate = new SqlCommand(UPDATE, conn);
+
+                commandUpdate.Parameters.Add(new SqlParameter("@Id", hotel.Id));
+                commandUpdate.Parameters.Add(new SqlParameter("@Name", hotel.Name));
+                commandUpdate.Parameters.Add(new SqlParameter("@Value", hotel.Value));
+
+                commandUpdate.ExecuteNonQuery();
+
+                status = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return status;
         }
 
         public bool DeleteHotel(int id, string DELETE)

@@ -31,7 +31,7 @@ namespace Controllers
 
         public readonly static string DELETE = "delete from Ticket where Id = @Id";
 
-
+        public readonly static string UPDATE = "update Ticket set Value = @Value where Id = @Id";
 
         private TicketService _ticketService;
         //private AddressService _addressService;
@@ -44,7 +44,7 @@ namespace Controllers
             _ticketService = new TicketService();
         }
 
-        public bool InsertTicket(Ticket ticket)
+        public bool Insert(Ticket ticket)
         {
             bool status = false;
 
@@ -54,8 +54,8 @@ namespace Controllers
                 //_cityService.InsertCity(ticket.Arrival.City);
                 //_addressService.InsertAddress(ticket.Departure);
                 //_addressService.InsertAddress(ticket.Arrival);
-                new AddressController().InsertAddress(ticket.Departure);
-                new AddressController().InsertAddress(ticket.Arrival);
+                new AddressController().Insert(ticket.Departure);
+                new AddressController().Insert(ticket.Arrival);
 
                 _ticketService.InsertTicket(ticket, INSERT);
 
@@ -70,12 +70,18 @@ namespace Controllers
             return status;
         }
 
-        public int UpdateTicket()
+        public bool Update(Ticket ticket)
         {
-            return 0;
+            new CityController().Update(ticket.Departure.City);
+            new AddressController().Update(ticket.Departure);
+            
+            new CityController().Update(ticket.Arrival.City);
+            new AddressController().Update(ticket.Arrival);
+
+            return _ticketService.UpdateTicket(ticket, UPDATE);
         }
 
-        public bool DeleteTicket(int id)
+        public bool Delete(int id)
         {
             return _ticketService.DeleteTicket(id, DELETE);
         }

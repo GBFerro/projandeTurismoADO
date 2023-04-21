@@ -60,6 +60,8 @@ namespace Controllers
 
         public readonly static string DELETE = "delete from Package where Id = @Id";
 
+        public readonly static string UPDATE = "update Package set Value = @Value where Id = @Id";
+
 
         //private TicketService _ticketService;
         //private AddressService _addressService;
@@ -77,7 +79,7 @@ namespace Controllers
             //_clientService = new ClientService();
             _packageService = new PackageService();
         }
-        public bool InsertPackage(Package package)
+        public bool Insert(Package package)
         {
             bool status = false;
 
@@ -86,19 +88,19 @@ namespace Controllers
                 //_cityService.InsertCity(package.Hotel.Address.City);
                 //_addressService.InsertAddress(package.Hotel.Address);
                 //_hotelService.InsertHotel(package.Hotel);
-                new HotelController().InsertHotel(package.Hotel);
+                new HotelController().Insert(package.Hotel);
 
                 //_cityService.InsertCity(package.Client.Address.City);
                 //_addressService.InsertAddress(package.Client.Address);
                 //_clientService.InsertClient(package.Client);
-                new ClientController().InsertClient(package.Client);
+                new ClientController().Insert(package.Client);
 
                 //_cityService.InsertCity(package.Ticket.Departure.City);
                 //_cityService.InsertCity(package.Ticket.Arrival.City);
                 //_addressService.InsertAddress(package.Ticket.Departure);
                 //_addressService.InsertAddress(package.Ticket.Arrival);
                 //_ticketService.InsertTicket(package.Ticket);
-                new TicketController().InsertTicket(package.Ticket);
+                new TicketController().Insert(package.Ticket);
 
                 _packageService.InsertPackage(package, INSERT);
 
@@ -113,12 +115,15 @@ namespace Controllers
             return status;
         }
 
-        public int UpdatePackage()
+        public bool Update(Package package)
         {
-            return 0;
+            new HotelController().Update(package.Hotel);
+            new ClientController().Update(package.Client);
+            new TicketController().Update(package.Ticket);
+            return _packageService.UpdatePackage(package, UPDATE);
         }
 
-        public bool DeletePackage(int id)
+        public bool Delete(int id)
         {
             return _packageService.DeletePackage(id, DELETE);
         }

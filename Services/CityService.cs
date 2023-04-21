@@ -45,9 +45,27 @@ namespace Services
             return city;
         }
 
-        public int UpdateCity()
+        public bool UpdateCity(City city, string UPDATE)
         {
-            return 0;
+            bool status = false;
+
+            try
+            {
+                SqlCommand commandUpdate = new SqlCommand(UPDATE, conn);
+
+                commandUpdate.Parameters.Add(new SqlParameter("@Id", city.Id));
+                commandUpdate.Parameters.Add(new SqlParameter("@Name", city.Name));
+
+                commandUpdate.ExecuteNonQuery();
+
+                status = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return status;
         }
 
         public bool DeleteCity(int id, string INSERT)

@@ -47,9 +47,28 @@ namespace Services
             return client;
         }
 
-        public int UpdateClient()
+        public bool UpdateClient(Client client, string UPDATE)
         {
-            return 0;
+            bool status = false;
+
+            try
+            {
+                SqlCommand commandUpdate = new SqlCommand(UPDATE, conn);
+
+                commandUpdate.Parameters.Add(new SqlParameter("@Id", client.Id));
+                commandUpdate.Parameters.Add(new SqlParameter("@Name", client.Name));
+                commandUpdate.Parameters.Add(new SqlParameter("@Phone", client.Phone));
+
+                commandUpdate.ExecuteNonQuery();
+
+                status = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return status;
         }
 
         public bool DeleteClient(int id, string DELETE)

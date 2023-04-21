@@ -26,6 +26,8 @@ namespace Controllers
 
         public readonly static string DELETE = "delete from Hotel where Id = @Id";
 
+        public readonly static string UPDATE = "update Hotel set Name = @Name, Value = @Value where Id = @Id";
+
 
         private HotelService _hotelService;
         //private AddressService _addressService;
@@ -37,7 +39,7 @@ namespace Controllers
             _hotelService = new HotelService();
         }
 
-        public bool InsertHotel(Hotel hotel)
+        public bool Insert(Hotel hotel)
         {
             bool status = false;
 
@@ -45,7 +47,7 @@ namespace Controllers
             {
                 //_cityService.InsertCity(hotel.Address.City);
                 //_addressService.InsertAddress(hotel.Address);
-                new AddressController().InsertAddress(hotel.Address);
+                new AddressController().Insert(hotel.Address);
 
                 _hotelService.InsertHotel(hotel, INSERT);
 
@@ -60,12 +62,14 @@ namespace Controllers
             return status;
         }
 
-        public int UpdateHotel()
+        public bool Update(Hotel hotel)
         {
-            return 0;
+            new CityController().Update(hotel.Address.City);
+            new AddressController().Update(hotel.Address);
+            return _hotelService.UpdateHotel(hotel, UPDATE);
         }
 
-        public bool DeleteHotel(int id)
+        public bool Delete(int id)
         {
             return _hotelService.DeleteHotel(id, DELETE);
         }

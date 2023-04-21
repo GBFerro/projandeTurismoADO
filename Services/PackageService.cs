@@ -52,9 +52,26 @@ namespace Services
             return 0;
         }
 
-        public int DeletePackage()
+        public bool DeletePackage(int id, string DELETE)
         {
-            return 0;
+            bool status = false;
+
+            try
+            {
+                SqlCommand commandDelete = new SqlCommand(DELETE, conn);
+
+                commandDelete.Parameters.Add(new SqlParameter("@Id", id));
+
+                commandDelete.ExecuteNonQuery();
+
+                status = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return status;
         }
 
         public List<Package> FindAll(string GETALL)

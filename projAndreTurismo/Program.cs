@@ -91,6 +91,8 @@ internal class Program
 
         Console.WriteLine(new PackageController().InsertPackage(package) ? "Inserido" : "Erro");
     */
-        new PackageController().FindAll().ForEach(x => Console.WriteLine(x + "\n\n"));
+        new ClientController().FindAll().ForEach(x => Console.WriteLine(x + "\n\n"));
+
+        //Console.WriteLine(new ClientController().DeleteClient(46) ? "Deletado" : "Não encontrado");
     }
 }

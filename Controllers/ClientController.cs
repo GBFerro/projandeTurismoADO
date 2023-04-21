@@ -21,6 +21,8 @@ namespace Controllers
             "from[Client] client join[Address] address on client.[IdAddress] = address.[Id]" +
             "join[City] city on city.[Id] = address.[IdCity]";
 
+        private readonly static string DELETE = "delete from Client where Id = @Id";
+
         private ClientService _clientService;
         //private AddressService _addressService;
         //private CityService _cityService;
@@ -57,9 +59,9 @@ namespace Controllers
             return 0;
         }
 
-        public int DeleteClient()
+        public bool DeleteClient(int id)
         {
-            return 0;
+            return _clientService.DeleteClient(id, DELETE);
         }
 
         public List<Client> FindAll()

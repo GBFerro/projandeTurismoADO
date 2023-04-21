@@ -15,6 +15,8 @@ namespace Controllers
 
         public readonly static string GETALL = "select Id , Name, RegisterDate from City";
 
+        public readonly static string DELETE = "delete from City where Id = @Id"; 
+
         private CityService _cityService;
 
         public CityController()
@@ -39,14 +41,14 @@ namespace Controllers
             return status;
         }
 
-        public int UpdateCity()
+        public bool UpdateCity()
         {
-            return 0;
+            return true;
         }
 
-        public int DeleteCity()
+        public bool DeleteCity(int id)
         {
-            return 0;
+            return _cityService.DeleteCity(id, DELETE);
         }
 
         public List<City> FindAll()

@@ -58,6 +58,8 @@ namespace Controllers
             "join [Address] [addressClient] on client.[IdAddress] = [addressClient].[Id] " +
             "join [City] cityClient on cityClient.[Id] = [addressClient].[IdCity]";
 
+        public readonly static string DELETE = "delete from Package where Id = @Id";
+
 
         //private TicketService _ticketService;
         //private AddressService _addressService;
@@ -116,9 +118,9 @@ namespace Controllers
             return 0;
         }
 
-        public int DeletePackage()
+        public bool DeletePackage(int id)
         {
-            return 0;
+            return _packageService.DeletePackage(id, DELETE);
         }
 
         public List<Package> FindAll()

@@ -20,6 +20,8 @@ namespace Controllers
             "c.RegisterDate as CityRegister, a.RegisterDate as AddressRegister " +
             "from Address a join City c on a.IdCity = c.Id";
 
+        public readonly static string DELETE = "delete from Address where Id = @Id";
+
         private AddressService _addressService;
         //private CityService _cityService;
         public AddressController() {
@@ -52,9 +54,9 @@ namespace Controllers
             return 0;
         }
 
-        public int DeleteAddress()
+        public bool DeleteAddress(int id)
         {
-            return 0;
+            return _addressService.DeleteAddress(id, DELETE);
         }
 
         public List<Address> FindAll()

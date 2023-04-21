@@ -29,6 +29,8 @@ namespace Controllers
             "join[Address] addressDeparture on ticket.[Departure] = addressDeparture.[Id] " +
             "join[City] cityDeparture on addressDeparture.[IdCIty] = cityDeparture.[Id]";
 
+        public readonly static string DELETE = "delete from Ticket where Id = @Id";
+
 
 
         private TicketService _ticketService;
@@ -73,9 +75,9 @@ namespace Controllers
             return 0;
         }
 
-        public int DeleteTicket()
+        public bool DeleteTicket(int id)
         {
-            return 0;
+            return _ticketService.DeleteTicket(id, DELETE);
         }
 
         public List<Ticket> FindAll()

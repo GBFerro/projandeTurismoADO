@@ -21,8 +21,10 @@ namespace Controllers
             "address.[Complement] as ComplementAddress, city.[Id] as IdCity, city.[Name] as NameCity, " +
             "city.[RegisterDate] as RegisterCity, address.[RegisterDate] as RegisterAddress, " +
             "hotel.[RegisterDate] as RegisterHotel " +
-            "from[Hotel] hotel join[Address] address on hotel.[IdAddress] = address.[Id] " +
-            "join[City] city on city.[Id] = address.[IdCIty]";
+            "from [Hotel] hotel join [Address] address on hotel.[IdAddress] = address.[Id] " +
+            "join [City] city on city.[Id] = address.[IdCity]";
+
+        public readonly static string DELETE = "delete from Hotel where Id = @Id";
 
 
         private HotelService _hotelService;
@@ -63,9 +65,9 @@ namespace Controllers
             return 0;
         }
 
-        public int DeleteHotel()
+        public bool DeleteHotel(int id)
         {
-            return 0;
+            return _hotelService.DeleteHotel(id, DELETE);
         }
 
         public List<Hotel> FindAll()
